@@ -1,13 +1,11 @@
 {
   "name": "AI_EXPERT_SERVER",
   "version": "1.0.0",
-  "lockfileVersion": 3,
-  "requires": true,
   "description": "My Node.js application",
   "main": "server.js",
-  "packages": {},
   "engines": {
-    "node": "14.x"
+    "node": "14.x",
+    "npm": "6.x"
   },
   "scripts": {
     "start": "node server.js"
@@ -15,7 +13,6 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.26.0",
     "dotenv": "^16.3.1",
-    "http": "^0.0.1-security",
     "langchain": "^0.0.114",
     "uuid": "^9.0.0",
     "ws": "^8.13.0"
