@@ -1,5 +1,6 @@
 // Load all necessary modules from Node.js and the langchain library
 require("dotenv").config();
+require('web-streams-polyfill');
 global.Headers = require('node-fetch').Headers;
 global.Request = require('node-fetch').Request;
 const fetch = require('node-fetch');
