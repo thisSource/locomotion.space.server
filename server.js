@@ -2,6 +2,7 @@
 
 
 require("dotenv").config();
+global.Headers = require('node-fetch').Headers;
 const fetch = require('node-fetch');
 global.fetch = fetch;
 const http = require("http");
