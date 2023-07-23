@@ -1,5 +1,9 @@
 // Load all necessary modules from Node.js and the langchain library
+
+
 require("dotenv").config();
+const fetch = require('node-fetch');
+global.fetch = fetch;
 const http = require("http");
 const WebSocket = require("ws");
 const { ChatOpenAI } = require("langchain/chat_models/openai");
