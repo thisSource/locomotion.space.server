@@ -102,6 +102,7 @@ const vectorStore = new SupabaseVectorStore(new OpenAIEmbeddings(), {
 // Listen for new WebSocket connections
 wss.on("connection", (ws) => {
   const client_id = uuidv4(); // Generate a unique identifier for the client
+  
 
   // Listen for messages from the client
   ws.on("message", async (message) => {
@@ -209,4 +210,11 @@ wss.on("connection", (ws) => {
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
   console.log(`WebSocket server is running on port ${PORT}`);
+});
+
+server.on('request', (req, res) => {
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('OK');
+  }
 });
