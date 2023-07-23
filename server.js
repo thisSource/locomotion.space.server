@@ -36,8 +36,8 @@ class SupabaseMemoryStore {
         new ConversationSummaryMemory({
           memoryKey: "chat_history",
           llm: new OpenAI({
-            // modelName: "gpt-3.5-turbo",
-            modelName: "gpt-4-0613",
+            modelName: "gpt-3.5-turbo",
+            // modelName: "gpt-4-0613",
             temperature: 0,
           }),
         });
@@ -115,7 +115,8 @@ wss.on("connection", (ws) => {
 
       // Initialize a new ChatOpenAI instance
       const chat = new ChatOpenAI({
-        modelName: "gpt-4-0613",
+        // modelName: "gpt-4-0613",
+        modelName: "gpt-3.5-turbo",
         streaming: true,
         callbacks: [
           {
