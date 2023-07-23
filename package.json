@@ -4,8 +4,8 @@
   "description": "My Node.js application",
   "main": "server.js",
   "engines": {
-    "node": "16.9.0",
-    "npm": "7.x"
+    "node": "18.13.0",
+    "npm": "9.6.2"
   },
   "scripts": {
     "start": "node server.js"
