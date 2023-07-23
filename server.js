@@ -1,7 +1,4 @@
 // Load all necessary modules from Node.js and the langchain library
-const { ReadableStream } = require('web-streams-polyfill/ponyfill/es6');
-global.ReadableStream = ReadableStream;
-
 require("dotenv").config();
 global.Headers = require('node-fetch').Headers;
 global.Request = require('node-fetch').Request;
