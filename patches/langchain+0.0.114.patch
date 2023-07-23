@@ -1,3 +1,42 @@
+diff --git a/node_modules/langchain/dist/util/event-source-parse.cjs b/node_modules/langchain/dist/util/event-source-parse.cjs
+index 6eda09c..d98f500 100644
+--- a/node_modules/langchain/dist/util/event-source-parse.cjs
++++ b/node_modules/langchain/dist/util/event-source-parse.cjs
+@@ -14,22 +14,20 @@ exports.EventStreamContentType = "text/event-stream";
+  * @param onChunk A function that will be called on each new byte chunk in the stream.
+  * @returns {Promise<void>} A promise that will be resolved when the stream closes.
+  */
+-async function getBytes(stream, onChunk) {
+-    const reader = stream.getReader();
+-    // CHANGED: Introduced a "flush" mechanism to process potential pending messages when the stream ends.
+-    //          This change is essential to ensure that we capture every last piece of information from streams,
+-    //          such as those from Azure OpenAI, which may not terminate with a blank line. Without this
+-    //          mechanism, we risk ignoring a possibly significant last message.
+-    //          See https://github.com/hwchase17/langchainjs/issues/1299 for details.
+-    // eslint-disable-next-line no-constant-condition
+-    while (true) {
+-        const result = await reader.read();
+-        if (result.done) {
+-            onChunk(new Uint8Array(), true);
+-            break;
++ async function getBytes(stream, onChunk) {
++    // const reader = stream.getReader();
++    // let result;
++    // // eslint-disable-next-line no-cond-assign
++    // while (!(result = await reader.read()).done) {
++    //     onChunk(result.value);
++    // }
++    stream.on('readable', () => {
++        let chunk;
++        while (null !== (chunk = stream.read())) {
++            onChunk(chunk);
+         }
+-        onChunk(result.value);
+     }
++    );
+ }
+ exports.getBytes = getBytes;
+ /**
 diff --git a/node_modules/langchain/dist/util/event-source-parse.js b/node_modules/langchain/dist/util/event-source-parse.js
 index 31e1c06..d2f0c61 100644
 --- a/node_modules/langchain/dist/util/event-source-parse.js
