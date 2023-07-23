@@ -8,7 +8,8 @@
     "npm": "9.6.2"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.26.0",
@@ -18,5 +19,9 @@
     "uuid": "^9.0.0",
     "web-streams-polyfill": "^4.0.0-beta.3",
     "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "patch-package": "^7.0.2",
+    "postinstall-postinstall": "^2.1.0"
   }
 }
