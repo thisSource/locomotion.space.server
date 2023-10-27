@@ -42,8 +42,8 @@ class SupabaseMemoryStore {
           memoryKey: "chat_history",
           llm: new OpenAI({
             openAIApiKey: process.env.OPENAI_API_KEY,
-            // modelName: "gpt-3.5-turbo",
-            modelName: "gpt-4-0613",
+            modelName: "gpt-3.5-turbo",
+            // modelName: "gpt-4-0613",
             temperature: 0,
           }),
         });
@@ -123,8 +123,8 @@ wss.on("connection", (ws) => {
       // Initialize a new ChatOpenAI instance
       const chat = new ChatOpenAI({
         openAIApiKey: process.env.OPENAI_API_KEY,
-        modelName: "gpt-4-0613",
-        // modelName: "gpt-3.5-turbo",
+        // modelName: "gpt-4-0613",
+        modelName: "gpt-3.5-turbo",
         streaming: true,
         callbacks: [
           {
