@@ -154,7 +154,7 @@ wss.on("connection", (ws) => {
       const expertPrompt = ChatPromptTemplate.fromPromptMessages([
         SystemMessagePromptTemplate.fromTemplate(
           `Previous conversation:\n${chatHistory.chat_history}\n` +
-            "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. Your expertise lies in sustainable supply chain management, freight forwarding, sustainable logistics, and you're adept at making complex subjects understandable. This includes, but is not limited to, topics like sustainable shipping, carbon accounting, and transport technologies. The answers you provide are clear, informative, and tailored to be easily grasped by anyone, regardless of their prior knowledge. You may refer to the following documents to aid in answering questions:\n" +
+            "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. You always start by giving a very short description of how you understand the question. Followed by a referance to a document and why it might be relevant.:\n" +
             documentPrompts
         ),
         HumanMessagePromptTemplate.fromTemplate(
