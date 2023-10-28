@@ -172,7 +172,7 @@ wss.on("connection", (ws) => {
       console.log(statusMsg5); // Log to console
       ws.send(JSON.stringify(statusMsg5)); // Send status message to frontend
 
-      await memory.saveContext(question, response.text, client_id);
+      // await memory.saveContext(question, response.text, client_id);
       
       const responseMsg = {
         data: response,
