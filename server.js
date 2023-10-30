@@ -137,7 +137,7 @@ wss.on("connection", (ws) => {
       });
 
       // Perform similarity search based on the question and format the results
-      const searchResults = await vectorStore.similaritySearch(question, 1);
+      const searchResults = await vectorStore.similaritySearch(question, 5);
       const statusMsg3 = { status: "Performing similarity search" };
       console.log(statusMsg3); // Log to console
       ws.send(JSON.stringify(statusMsg3)); // Notify frontend that similarity search is done
