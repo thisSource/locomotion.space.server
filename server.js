@@ -146,7 +146,7 @@ wss.on("connection", (ws) => {
         .map(
           (doc, i) =>
             `Document ${i + 1}: Titled '${doc.metadata.source}' on page ${
-              doc.metadata.page
+              doc.metadata.page + 1
             }, it says: "${sanitizeContent(doc.pageContent)}".`
         )
         .join("\n");
@@ -154,7 +154,7 @@ wss.on("connection", (ws) => {
       const expertPrompt = ChatPromptTemplate.fromPromptMessages([
         SystemMessagePromptTemplate.fromTemplate(
           `Previous conversation:\n${chatHistory.chat_history}\n` +
-            "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. You always start by giving a one sentance description of how you understand the question and why a certain document, (title of the document as of the Title in metadata not the title of the file), could be of value. Followed by a 2 sentance explaination of the document.:\n" +
+            "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. You always start by giving a one sentance description of how you understand the question and why a certain document, (the Title on the cover page), could be of value. Followed by a 2 sentance explaination of the document.:\n" +
             documentPrompts
         ),
         HumanMessagePromptTemplate.fromTemplate(
