@@ -154,7 +154,7 @@ wss.on("connection", (ws) => {
       const expertPrompt = ChatPromptTemplate.fromPromptMessages([
         SystemMessagePromptTemplate.fromTemplate(
           `Previous conversation:\n${chatHistory.chat_history}\n` +
-            "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. You always start by giving a one sentance description of how you understand the question and why a certain document, (the Title on the cover page), could be of value. Followed by a 2 sentance explaination of the document.:\n" +
+            "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. You always start by giving a one sentance description of how you understand the question and why a certain document, (the Title of the source document as in the metadata), could be of value. Followed by a 2 sentance explaination of the document.:\n" +
             documentPrompts
         ),
         HumanMessagePromptTemplate.fromTemplate(
