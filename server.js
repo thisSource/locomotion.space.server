@@ -142,25 +142,43 @@ wss.on("connection", (ws) => {
       console.log(statusMsg3); // Log to console
       ws.send(JSON.stringify(statusMsg3)); // Notify frontend that similarity search is done
 
-      const documentPrompts = searchResults
-        .map(
-          (doc, i) =>
-            `Document ${i + 1}: Titled '${doc.metadata.source}' on page ${
-              doc.metadata.page + 1
-            }, it says: "${sanitizeContent(doc.pageContent)}".`
-        )
-        .join("\n");
+      // const documentPrompts = searchResults
+      //   .map(
+      //     (doc, i) =>
+      //       `Document ${i + 1}: Titled '${doc.metadata.source}' on page ${
+      //         doc.metadata.page + 1
+      //       }, it says: "${sanitizeContent(doc.pageContent)}".`
+      //   )
+      //   .join("\n");
 
-      const expertPrompt = ChatPromptTemplate.fromPromptMessages([
-        SystemMessagePromptTemplate.fromTemplate(
-          `Previous conversation:\n${chatHistory.chat_history}\n` +
-            "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. You always start by giving a one sentance description of how you understand the question and why a certain document, (the Title of the source document as in the metadata), could be of value. Followed by a 2 sentance explaination of the document.:\n" +
-            documentPrompts
-        ),
-        HumanMessagePromptTemplate.fromTemplate(
-          `Based on the documents provided, please give an answer to the following question: ${question}`
-        ),
-      ]);
+      // const expertPrompt = ChatPromptTemplate.fromPromptMessages([
+      //   SystemMessagePromptTemplate.fromTemplate(
+      //     `Previous conversation:\n${chatHistory.chat_history}\n` +
+      //       "You are an AI assistant that embodies the persona of a friendly Sustainable Logistics Expert. You always start by giving a one sentance description of how you understand the question and why a certain document, (the Title of the source document as in the metadata), could be of value. Followed by a 2 sentance explaination of the document.:\n" +
+      //       documentPrompts
+      //   ),
+      //   HumanMessagePromptTemplate.fromTemplate(
+      //     `Based on the documents provided, please give an answer to the following question: ${question}`
+      //   ),
+      // ]);
+
+      const documentPrompts = searchResults
+  .map((doc, i) => 
+    `Titled '${doc.metadata.source}' on page ${doc.metadata.page + 1}, it says: "${sanitizeContent(doc.pageContent)}".`
+  )
+  .join("\n");
+
+const expertPrompt = ChatPromptTemplate.fromPromptMessages([
+  SystemMessagePromptTemplate.fromTemplate(
+    `Previous conversation:\n${chatHistory.chat_history}\n` +
+    "As a Sustainable Logistics Expert AI, you understand the question in context and provide relevant insights. Refer to these documents:\n" +
+    documentPrompts
+  ),
+  HumanMessagePromptTemplate.fromTemplate(
+    `How does this information answer the following question: ${question}`
+  ),
+]);
+
 
       const chain = new LLMChain({ prompt: expertPrompt, llm: chat });
       const statusMsg4 = { status: "Recieving the AI response" };
