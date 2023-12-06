@@ -163,21 +163,25 @@ wss.on("connection", (ws) => {
       // ]);
 
       const documentPrompts = searchResults
-  .map((doc, i) => 
-    `Titled '${doc.metadata.source}' on page ${doc.metadata.page + 1}, it says: "${sanitizeContent(doc.pageContent)}".`
-  )
-  .join("\n");
-
-const expertPrompt = ChatPromptTemplate.fromPromptMessages([
-  SystemMessagePromptTemplate.fromTemplate(
-    `Previous conversation:\n${chatHistory.chat_history}\n` +
-    "As a Sustainable Logistics Expert AI, you understand the question in context and provide relevant insights. Refer to these documents:\n" +
-    documentPrompts
-  ),
-  HumanMessagePromptTemplate.fromTemplate(
-    `How does this information answer the following question: ${question}`
-  ),
-]);
+      .map((doc, i) => {
+        const title = doc.metadata.source;
+        const page = doc.metadata.page + 1;
+        const contentSummary = sanitizeContent(doc.pageContent); // Assuming this contains a summary or key points.
+        return `Document ${i + 1}, titled '${title}' on page ${page}, discusses: "${contentSummary}".`;
+      })
+      .join("\n");
+    
+    const expertPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        `Previous conversation:\n${chatHistory.chat_history}\n` +
+        "As a Sustainable Logistics Expert AI, understand the query in context and provide relevant insights. Refer to these summarized documents:\n" +
+        documentPrompts
+      ),
+      HumanMessagePromptTemplate.fromTemplate(
+        `How does this information answer the following question: ${question}`
+      ),
+    ]);
+    
 
 
       const chain = new LLMChain({ prompt: expertPrompt, llm: chat });
