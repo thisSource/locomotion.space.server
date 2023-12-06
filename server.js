@@ -164,23 +164,23 @@ wss.on("connection", (ws) => {
 
       const documentPrompts = searchResults
       .map((doc, i) => {
-        const title = doc.metadata.source;
+        const contentContext = sanitizeContent(doc.pageContent); // This should be a brief description or summary of the document's context.
         const page = doc.metadata.page + 1;
-        const contentSummary = sanitizeContent(doc.pageContent); // Assuming this contains a summary or key points.
-        return `Document ${i + 1}, titled '${title}' on page ${page}, discusses: "${contentSummary}".`;
+        return `In a document discussing '${contentContext}' on page ${page}, the information reveals: "${sanitizeContent(doc.pageContent)}".`;
       })
       .join("\n");
     
     const expertPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
         `Previous conversation:\n${chatHistory.chat_history}\n` +
-        "As a Sustainable Logistics Expert AI, understand the query in context and provide relevant insights. Refer to these summarized documents:\n" +
+        "As a Sustainable Logistics Expert AI, you are to understand the query in the context of the provided document summaries. These documents cover:\n" +
         documentPrompts
       ),
       HumanMessagePromptTemplate.fromTemplate(
-        `How does this information answer the following question: ${question}`
+        `Considering these contexts, how would you answer the following question: ${question}`
       ),
     ]);
+    
     
 
 
